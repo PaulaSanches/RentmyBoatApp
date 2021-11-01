@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "302131369720",
+    "project_id": "rentmyboat-app",
+    "storage_bucket": "rentmyboat-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302131369720:android:5c82a4b6a75cba5aafcd0d",
+        "android_client_info": {
+          "package_name": "com.project.rentmyboatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302131369720-7b9b2mb1u5omhmsb0ha45uif7h3h6rh2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.rentmyboatapp",
+            "certificate_hash": "451e1cee574b69752d252f175b5d24b33425bc1d"
+          }
+        },
+        {
+          "client_id": "302131369720-9ocepgf5sjc97an1l7elpjneuiuh28nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrZsXYjoNyBAGQ0RewfrGQzmjdhnKlbgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302131369720-9ocepgf5sjc97an1l7elpjneuiuh28nb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
