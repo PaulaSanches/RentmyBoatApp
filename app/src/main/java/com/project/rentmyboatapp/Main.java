@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class MainActivity extends AppCompatActivity {
+public class Main extends AppCompatActivity {
 
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     private FirebaseAuth user = FirebaseAuth.getInstance();
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main);
 
 
         /* user login verification*/
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         /*User create*/
         user.createUserWithEmailAndPassword("paula@gmail.com", "1234")
-                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(Main.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if( task.isSuccessful()) {
@@ -76,21 +76,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-        /*DatabaseReference users = reference.child("users");
-
-        users.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i( "FIREBASE", dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
 
 
 

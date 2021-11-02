@@ -2,6 +2,7 @@ package com.project.rentmyboatapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,12 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.project.rentmyboatapp.user.User;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import settings.FirebaseSettings;
@@ -27,12 +31,16 @@ public class Login extends AppCompatActivity {
         private EditText email, password;
         private Button buttonGo;
         private FirebaseAuth authenticate;
-        private User user = new User();
+        private FirebaseFirestore fStore;
+        private com.project.rentmyboatapp.user.User user = new com.project.rentmyboatapp.user.User();
+        boolean valid = true;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_login);
+            setContentView(R.layout.login);
+
+            fStore = FirebaseFirestore.getInstance();
 
             email = findViewById(R.id.editEmail);
             password = findViewById(R.id.editPassword);
@@ -76,7 +84,8 @@ public class Login extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if (task.isSuccessful()) {
-                        Intent intent = new Intent(Login.this, AdminActivity.class);
+                        checkUserAccessLevel(authenticate.getCurrentUser().getUid());
+                        Intent intent = new Intent(Login.this, Administrator.class);
                         startActivity(intent);
 
                     } else {
@@ -98,7 +107,33 @@ public class Login extends AppCompatActivity {
                 }
             });
         }
+
+    private void checkUserAccessLevel(String uid) {
+
+        DocumentReference df = fStore.collection("Users").document(uid);
+        //extract the data
+        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Log.d("TAG", "onSuccess: " + documentSnapshot. getData());
+
+                if(documentSnapshot.getString("isAdmin")!= null){
+                        //user is Admin
+                   startActivity(new Intent(getApplicationContext(), Administrator.class));
+                   finish();
+                }
+
+                if(documentSnapshot.getString("isUser")!= null){
+                    //user is normal User
+                    startActivity(new Intent(getApplicationContext(), User.class));
+                    finish();
+                }
+
+            }
+        });
+
     }
+}
 
 
 

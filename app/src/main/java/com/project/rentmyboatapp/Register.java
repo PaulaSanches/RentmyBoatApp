@@ -18,33 +18,45 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.rentmyboatapp.user.User;
 
+
+import org.w3c.dom.Document;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import settings.FirebaseSettings;
 
 public class Register extends AppCompatActivity {
 
-    private EditText fullName, email, password, driverlicense;
+    private EditText fullName, email, password, phoneNumber;
     private Button btnCreate;
     private FirebaseAuth authenticate;
+    private FirebaseFirestore fstore;
     private User user;
     private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign);
+        setContentView(R.layout.register);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        fstore = FirebaseFirestore.getInstance();
+
 
         fullName = findViewById(R.id.editName);
         email = findViewById(R.id.editEmail);
         password = findViewById(R.id.editPassword);
-        driverlicense = findViewById(R.id.editDriverLicense);
+        phoneNumber = findViewById(R.id.editPhoneNumber);
         btnCreate = findViewById(R.id.btnCreate);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,18 +65,18 @@ public class Register extends AppCompatActivity {
                 String textName = fullName.getText().toString();
                 String textEmail = email.getText().toString();
                 String textPassword = password.getText().toString();
-                String textDriverLicense = driverlicense.getText().toString();
+                String textPhoneNumber = phoneNumber.getText().toString();
 
                 // making sure the blanks are filled
                 if( !textName.isEmpty() ){
-                    if(!textDriverLicense.isEmpty()){
+                    if(!textPhoneNumber.isEmpty()){
                         if( !textEmail.isEmpty() ) {
                             if ( !textPassword.isEmpty() ) {
                                 user = new User();
                                 user.setName(textName);
                                 user.setEmail(textEmail);
                                 user.setPassword(textPassword);
-                                user.setDriverlicense(textDriverLicense);
+                                user.setPhonenumber(textPhoneNumber);
                                 userCreate();
                             } else {
                                 Toast.makeText(Register.this, "Fill password!",
@@ -74,15 +86,13 @@ public class Register extends AppCompatActivity {
                             Toast.makeText(Register.this, "Fill email!",
                                     Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else {
-                        Toast.makeText(Register.this, "Fill Driver License!",
+                    } else {
+                        Toast.makeText(Register.this, "Fill Phone Number!",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Toast.makeText(Register.this, "Fill name!",
                             Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -101,7 +111,17 @@ public class Register extends AppCompatActivity {
                     FirebaseUser userDb = FirebaseAuth.getInstance().getCurrentUser();
                     mDatabase.child("users").child(userDb.getUid()).setValue(user);
                     //mDatabase.setValue(user);
-                    Intent intent = new Intent(Register.this, AdminActivity.class);
+                    DocumentReference df = fstore.collection("Users").document(userDb.getUid());
+                    Map<String,Object> userInfo = new HashMap<>();
+                    userInfo.put("FullName", fullName.getText().toString());
+                    userInfo.put("Email", email.getText().toString());
+                    userInfo.put("PhoneNumber", phoneNumber.getText().toString());
+                    //if User is Owner
+                    userInfo.put("isAdmin", "1");
+
+                    df.set(userInfo);
+
+                    Intent intent = new Intent(Register.this, Administrator.class);
                     startActivity(intent);
 
                 } else {

@@ -3,16 +3,16 @@ package com.project.rentmyboatapp.user;
 public class User {
 
     private String name;
-    private String driverlicense;
+    private String phonenumber;
     private String password;
     private String email;
 
     public User() {
     }
 
-    public User(String name, String driverlicense,String email) {
+    public User(String name, String phonenumber,String email) {
         this.name = name;
-        this.driverlicense = driverlicense;
+        this.phonenumber = phonenumber;
         this.email = email;
     }
 
@@ -24,12 +24,12 @@ public class User {
         this.name = name;
     }
 
-    public String getDriverlicense() {
-        return driverlicense;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
-    public void setDriverlicense(String driverlicense) {
-        this.driverlicense = driverlicense;
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     public String getEmail() {

@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RentmyBoatApp">
         <activity
-            android:name=".AdminActivity"
+            android:name=".Administrator"
+            android:exported="true" />
+        <activity
+            android:name=".User"
             android:exported="true" />
         <activity
             android:name=".Register"
@@ -19,7 +22,7 @@
             android:name=".Login"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Main"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
