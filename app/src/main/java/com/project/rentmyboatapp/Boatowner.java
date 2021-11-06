@@ -75,6 +75,13 @@ public class Boatowner extends AppCompatActivity {
         btnSave = findViewById(R.id.Save_btn);
         btnLogout = findViewById(R.id.Logout_btn);
 
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choosePicture();
+            }
+        });
+
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +101,6 @@ public class Boatowner extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 startActivity(new Intent(Boatowner.this, Boat.class));
-
             }
 
         });
@@ -107,15 +113,31 @@ public class Boatowner extends AppCompatActivity {
                 String Address = address.getText().toString();
                 String Bank = bankdetails.getText().toString();
                 String id = UUID.randomUUID().toString();
-
-
                 saveToFirestore(id, name, address, bankdetails);
             }
         });
     }
 
-    private void exit() {
+    private void choosePicture() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data!= null && data.getData()!= null) {
+            imageUri = data.getData();
+            profilePic.setImageURI(imageUri);
+            uploadPicture();
+        }
+    }
+
+
+    private void exit() {
     }
 
     private void update() {
@@ -126,47 +148,17 @@ public class Boatowner extends AppCompatActivity {
 
     private void saveToFirestore(String id, EditText name, EditText address, EditText bankdetails) {
 
-
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("Name", name);
         map.put("Address", address);
         map.put("Bank Details", bankdetails);
 
-        finish();
-
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                choosePicture();
-            }
-            private void choosePicture(){
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 1);
-
-
-            }
-        });
-
     }
 
-/*    protected void onActivityResult(int requestCode; int resultCode; @Nullable Intent data; {
-        Boatowner.super.onActivityResult(requestCode, resultCode, data);
-        if (!(requestCode == 1 && resultCode == RESULT_OK && data!= null && data.getData()!= null)) {
-            return;
-        }
-        imageUri = data.getData();
-        profilePic.setImageURI(imageUri);
-        uploadPicture();
-
-    }
-*/
     private void uploadPicture() {
         final String randomKey = UUID.randomUUID().toString();
         StorageReference riversRef = storageReference.child("images/"+ randomKey);
-
         riversRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -183,8 +175,9 @@ public class Boatowner extends AppCompatActivity {
 
                     }
                 });
-        }
     }
+}
+
 
 
 

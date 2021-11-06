@@ -128,7 +128,7 @@ public class Register extends AppCompatActivity {
                     else if (chkRegisterRenter.isChecked()) {
                         userInfo.put("isUser", "1");
                         df.set(userInfo);
-                        intent = new Intent(Register.this, Boat.class);
+                        intent = new Intent(Register.this, User.class);
                         startActivity(intent);
                     }
                 } else {

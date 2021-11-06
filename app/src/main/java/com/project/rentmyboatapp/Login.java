@@ -119,7 +119,7 @@ public class Login extends AppCompatActivity {
 
                 if(documentSnapshot.getString("isUser")!= null){
                     //user is normal User
-                    startActivity(new Intent(getApplicationContext(), Boat.class));
+                    startActivity(new Intent(getApplicationContext(), User.class));
                 }
 
             }

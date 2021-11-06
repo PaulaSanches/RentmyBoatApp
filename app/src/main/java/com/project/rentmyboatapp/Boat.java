@@ -17,6 +17,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -24,6 +28,7 @@ import com.google.firebase.storage.UploadTask;
 import com.project.rentmyboatapp.user.User;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Boat extends AppCompatActivity {
@@ -38,7 +43,9 @@ public class Boat extends AppCompatActivity {
     private FirebaseFirestore fstore;
     private User user;
 
-    //private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase;
+    String boatpic = UUID.randomUUID().toString();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,16 @@ public class Boat extends AppCompatActivity {
         btnSave = findViewById(R.id.Saved_btn);
         btnLogout = findViewById(R.id.Logout_button);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        boatimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choosePicture();
+            }
+
+        });
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +90,6 @@ public class Boat extends AppCompatActivity {
             }
         });
 
-
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,13 +97,30 @@ public class Boat extends AppCompatActivity {
                 String Desc = desc.getText().toString();
                 String Capacity = capacity.getText().toString();
                 String Price = price.getText().toString();
-                String id = UUID.randomUUID().toString();
 
-
-                saveToFirestore(id, desc, capacity, price);
+                saveToFirestore(Desc, Capacity, Price,boatpic);
             }
         });
     }
+
+    private void choosePicture(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data!= null && data.getData()!= null) {
+            boatimageUri = data.getData();
+            boatimage.setImageURI(boatimageUri);
+            uploadPicture();
+        }
+    }
+
 
     private void cancel() {
     }
@@ -97,46 +130,23 @@ public class Boat extends AppCompatActivity {
     }
 
 
-    private void saveToFirestore(String id, EditText desc, EditText capacity, EditText price) {
+    private void saveToFirestore( String desc, String capacity, String price, String boatpic) {
 
+        FirebaseUser userDb = FirebaseAuth.getInstance().getCurrentUser();
+        mDatabase.child("users").child(userDb.getUid()).setValue(user);
+        //mDatabase.setValue(user);
+        DocumentReference df = fstore.collection("Users").document(userDb.getUid());
+        Map<String,Object> boatInfo = new HashMap<>();
+        boatInfo.put("Description", desc);
+        boatInfo.put("Capacity", capacity);
+        boatInfo.put("Price", price);
+        boatInfo.put("BoatPic", boatpic);
 
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("Description", desc);
-        map.put("Capacity", capacity);
-        map.put("Price", price);
-
-
-
-        boatimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                choosePicture();
-            }
-            private void choosePicture(){
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 1);
-                //boatimageUri = data.getData();
-                //boatimage.setImageURI(boatimageUri);
-                //uploadPicture();
-
-                }
-            });
-
-
+        df.update(boatInfo);
     }
-/*
-    protected void onActivityResult(int requestCode; int resultCode; @Nullable Intent data; {
-        Boat.super.onActivityResult(requestCode, resultCode, data);
-        if (!(requestCode == 1 && resultCode == RESULT_OK && data!= null && data.getData()!= null)) {
-            return;
-        }
-*/
+
     private void uploadPicture() {
-        final String randomKey = UUID.randomUUID().toString();
-        StorageReference riversRef = storageReference.child("images/"+ randomKey);
+        StorageReference riversRef = storageReference.child("images/"+ boatpic);
 
         riversRef.putFile(boatimageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -151,7 +161,6 @@ public class Boat extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         //Unsuccessful upload
                         Toast.makeText((getApplicationContext()), "Failed", Toast.LENGTH_LONG).show();
-
                     }
                 });
     }
