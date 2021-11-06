@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Boatowner">
+
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="117dp"
+        android:layout_marginBottom="290dp"
+        android:contentDescription="@string/Avatar"
+        app:layout_constraintBottom_toTopOf="@+id/Edit_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avatar"
+        tools:srcCompat="@drawable/avatar" />
+
+    <EditText
+        android:id="@+id/edit_Name"
+        android:layout_width="260dp"
+        android:layout_height="48dp"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/edit_Address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profilePic" />
+
+    <EditText
+        android:id="@+id/edit_Address"
+        android:layout_width="260dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="2dp"
+        android:hint="Address"
+        android:inputType="textPostalAddress"
+        app:layout_constraintBottom_toTopOf="@+id/edit_Bank"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_Name" />
+
+    <Button
+        android:id="@+id/Myboats_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/Myboats_btn"
+        app:layout_constraintBottom_toTopOf="@+id/Save_btn"
+        app:layout_constraintStart_toStartOf="@+id/Save_btn"
+        app:layout_constraintTop_toBottomOf="@+id/edit_Bank" />
+
+    <EditText
+        android:id="@+id/edit_Bank"
+        android:layout_width="260dp"
+        android:layout_height="48dp"
+        android:hint="Bank Details"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/Myboats_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_Address" />
+
+    <Button
+        android:id="@+id/Edit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-48dp"
+        android:text="@string/Edit_btn"
+        app:layout_constraintBottom_toTopOf="@+id/Save_btn"
+        app:layout_constraintEnd_toStartOf="@+id/Save_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profilePic" />
+
+    <Button
+        android:id="@+id/Save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="116dp"
+        android:text="@string/Save_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Logout_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Edit_btn"
+        app:layout_constraintTop_toBottomOf="@+id/Edit_btn" />
+
+    <Button
+        android:id="@+id/Logout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Logout_btn"
+        app:layout_constraintBaseline_toBaselineOf="@+id/Save_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Save_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

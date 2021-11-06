@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Boat">
+
+    <ImageView
+        android:id="@+id/boatimage"
+        android:layout_width="246dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="73dp"
+        android:layout_marginBottom="351dp"
+        android:contentDescription="@string/boatImage"
+        app:layout_constraintBottom_toTopOf="@+id/Cancel_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avatar" />
+
+    <EditText
+        android:id="@+id/edit_desc"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Description "
+        app:layout_constraintBottom_toTopOf="@+id/edit_capacity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boatimage" />
+
+    <EditText
+        android:id="@+id/edit_capacity"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Capacity"
+        app:layout_constraintBottom_toTopOf="@+id/edit_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_desc" />
+
+    <EditText
+        android:id="@+id/edit_price"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="Price"
+        app:layout_constraintBottom_toTopOf="@+id/Saved_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_capacity" />
+
+    <Button
+        android:id="@+id/Cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Saved_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boatimage" />
+
+    <Button
+        android:id="@+id/Logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        app:layout_constraintBaseline_toBaselineOf="@+id/Saved_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Saved_btn" />
+
+    <Button
+        android:id="@+id/Saved_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saved"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Logout_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Cancel_btn"
+        app:layout_constraintTop_toBottomOf="@+id/edit_price" />
+</androidx.constraintlayout.widget.ConstraintLayout>

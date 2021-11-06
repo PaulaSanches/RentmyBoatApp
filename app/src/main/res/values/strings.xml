@@ -7,14 +7,23 @@
     <string name="password">Password</string>
     <string name="name">Name</string>
     <string name="create">Create</string>
-    <string name="title_activity_principal">PrincipalActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="todo">TODO</string>
-    <string name="action">actionbutton</string>
-    <string name="licenseNumber">License Number</string>
+    <string name="address">Address</string>
+    <string name="Myboats_btn">Myboats</string>
+    <string name="Edit_btn">Edit</string>
+    <string name="Save_btn">Save</string>
+    <string name="Avatar">Avatar</string>
+    <string name="edit_Name">Name</string>
+    <string name="edit_Address">Address</string>
+    <string name="Logout_btn">Logout</string>
+    <string name="edit_Bank">Bankdetails</string>
+    <string name="ImagephotoGallery">Photo</string>
+    <string name="description">Description</string>
+    <string name="capacity">Capacity</string>
+    <string name="price">Price</string>
+    <string name="cancel">Cancel</string>
+    <string name="saved">Save</string>
+    <string name="logout">Logout</string>
+    <string name="boatImage">BoatImage</string>
 
 </resources>

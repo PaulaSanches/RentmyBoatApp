@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,15 +19,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.rentmyboatapp.user.User;
 
-
-import org.w3c.dom.Document;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +35,7 @@ public class Register extends AppCompatActivity {
 
     private EditText fullName, email, password, phoneNumber;
     private Button btnCreate;
+    private CheckBox chkRegisterOwner,chkRegisterRenter;
     private FirebaseAuth authenticate;
     private FirebaseFirestore fstore;
     private User user;
@@ -56,9 +55,10 @@ public class Register extends AppCompatActivity {
         password = findViewById(R.id.editPassword);
         phoneNumber = findViewById(R.id.editPhoneNumber);
         btnCreate = findViewById(R.id.btnCreate);
+        chkRegisterOwner = findViewById(R.id.RegisterOwner);
+        chkRegisterRenter = findViewById(R.id.RegisterRenter);
 
-
-        btnCreate.setOnClickListener(new View.OnClickListener() {
+       btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -116,14 +116,21 @@ public class Register extends AppCompatActivity {
                     userInfo.put("FullName", fullName.getText().toString());
                     userInfo.put("Email", email.getText().toString());
                     userInfo.put("PhoneNumber", phoneNumber.getText().toString());
+
+                    Intent intent;
                     //if User is Owner
-                    userInfo.put("isAdmin", "1");
-
-                    df.set(userInfo);
-
-                    Intent intent = new Intent(Register.this, Administrator.class);
-                    startActivity(intent);
-
+                    if (chkRegisterOwner.isChecked()) {
+                        userInfo.put("isAdmin", "1");
+                        df.set(userInfo);
+                        intent = new Intent(Register.this, Boatowner.class);
+                        startActivity(intent);
+                    }
+                    else if (chkRegisterRenter.isChecked()) {
+                        userInfo.put("isUser", "1");
+                        df.set(userInfo);
+                        intent = new Intent(Register.this, Boat.class);
+                        startActivity(intent);
+                    }
                 } else {
                     String exception = "";
                     try {

@@ -26,62 +26,7 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-
-        /* user login verification*/
-        if(user.getCurrentUser() !=null) {
-            Log.i("CurrentUser", "Logged User!");
-        } else {
-            Log.i("CurrentUser", "User not logged!");
-        }
-
-        /*user login*/
-        user.signInWithEmailAndPassword("paula@gmail.com", "1234")
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if( task.isSuccessful() ){
-                            Log.i("SignIn", "Successfully user login");
-                        } else {
-                            Log.i("SignIn", "Error user login" );
-                        }
-                    }
-                });
-
-        /*User create*/
-        user.createUserWithEmailAndPassword("paula@gmail.com", "1234")
-                .addOnCompleteListener(Main.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if( task.isSuccessful()) {
-                            Log.i("CreateUser", "Successfully user create");
-                        } else {
-                            Log.i("CreateUser", "Error user create");
-                        }
-                    }
-                });
-
-        /*Un login User*/
-        user.signOut();
-
-        /*User Login*/
-        user.signInWithEmailAndPassword("paula@gmail.com", "1234")
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.i("signIn", "Successfully user sign");
-                        } else {
-                            Log.i("signIn", "Error user sign!");
-                        }
-                    }
-                });
-
-
-
         Toast.makeText(this,"onCreate", Toast.LENGTH_SHORT).show();
-
-
     }
     @Override
     protected void onStart() {

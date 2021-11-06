@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.project.rentmyboatapp.user.User;
 
 
 import settings.FirebaseSettings;
@@ -45,31 +46,28 @@ public class Login extends AppCompatActivity {
             email = findViewById(R.id.editEmail);
             password = findViewById(R.id.editPassword);
             buttonGo = findViewById(R.id.buttonGo);
-
-
             buttonGo.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                String textEmail = email.getText().toString();
-                                                String textPassword = password.getText().toString();
+                    @Override
+                    public void onClick(View v) {
+                        String textEmail = email.getText().toString();
+                        String textPassword = password.getText().toString();
 
-                                                if (!textEmail.isEmpty()) {
-                                                    if (!textPassword.isEmpty()) {
-                                                        user.setEmail(textEmail);
-                                                        user.setPassword(textPassword);
-                                                        validateLogin();
-                                                    } else {
-                                                        Toast.makeText(Login.this, "Fill password!",
-                                                                Toast.LENGTH_SHORT).show();
-                                                    }
+                        if (!textEmail.isEmpty()) {
+                            if (!textPassword.isEmpty()) {
+                                user.setEmail(textEmail);
+                                user.setPassword(textPassword);
+                                validateLogin();
+                            } else {
+                                Toast.makeText(Login.this, "Fill password!",
+                                        Toast.LENGTH_SHORT).show();
+                            }
 
-                                                } else {
-                                                    Toast.makeText(Login.this, "Fill email!",
-                                                            Toast.LENGTH_SHORT).show();
-                                                }
-
-                                            }
-                                        }
+                        } else {
+                            Toast.makeText(Login.this, "Fill email!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
             );
         }
 
@@ -85,9 +83,6 @@ public class Login extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
                         checkUserAccessLevel(authenticate.getCurrentUser().getUid());
-                        Intent intent = new Intent(Login.this, Administrator.class);
-                        startActivity(intent);
-
                     } else {
                         String exception = "";
                         try {
@@ -119,14 +114,12 @@ public class Login extends AppCompatActivity {
 
                 if(documentSnapshot.getString("isAdmin")!= null){
                         //user is Admin
-                   startActivity(new Intent(getApplicationContext(), Administrator.class));
-                   finish();
+                   startActivity(new Intent(getApplicationContext(), Boatowner.class));
                 }
 
                 if(documentSnapshot.getString("isUser")!= null){
                     //user is normal User
-                    startActivity(new Intent(getApplicationContext(), User.class));
-                    finish();
+                    startActivity(new Intent(getApplicationContext(), Boat.class));
                 }
 
             }
