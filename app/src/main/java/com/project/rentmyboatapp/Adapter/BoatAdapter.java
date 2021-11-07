@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.project.rentmyboatapp.Boat;
+
 import com.project.rentmyboatapp.BoatRenter;
 import com.project.rentmyboatapp.R;
 
