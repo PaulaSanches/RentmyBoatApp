@@ -22,11 +22,11 @@ import java.util.ArrayList;
 public class BoatAdapter extends RecyclerView.Adapter<BoatAdapter.BoatViewHolder> {
 
 
-    private ArrayList<Boat> arrayList;
+    private ArrayList<BoatRenter> arrayList;
     private Context context;
 
 
-    public BoatAdapter(ArrayList<Boat> arrayList, Context context) {
+    public BoatAdapter(ArrayList<BoatRenter> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
     }

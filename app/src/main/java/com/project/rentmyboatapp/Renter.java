@@ -23,7 +23,7 @@ public class Renter extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Boat> arrayList;
+    private ArrayList<BoatRenter> arrayList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
@@ -45,7 +45,7 @@ public class Renter extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrayList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Boat boat = snapshot.getValue(Boat.class);
+                    BoatRenter boat = snapshot.getValue(BoatRenter.class);
                     arrayList.add(boat);
                 }
                 adapter.notifyDataSetChanged();
