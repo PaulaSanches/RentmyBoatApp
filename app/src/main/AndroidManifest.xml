@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project.rentmyboatapp">
+    package="com.project.rentmyboatapp" >
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -10,7 +10,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RentmyBoatApp">
+        android:theme="@style/Theme.RentmyBoatApp" >
+        <activity
+            android:name=".Renter"
+            android:exported="true" />
         <activity
             android:name=".Boat"
             android:exported="true" />
@@ -25,7 +28,7 @@
             android:exported="true" />
         <activity
             android:name=".Main"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
